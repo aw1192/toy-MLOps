@@ -1,0 +1,37 @@
+# Step 5: CI/CD.
+#
+# Runs automatically on every push/PR to main. Trains the model fresh
+# (so the artifact CI tests against always matches current code, not a
+# stale binary), then runs the test suite against it. A red X here means
+# something broke before it ever reaches deployment.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Train model (produces model.pkl needed by tests)
+        run: python train.py
+
+      - name: Run tests
+        run: pytest -v
+
+      - name: Build Docker image
+        run: docker build -t toy-mlops-api .

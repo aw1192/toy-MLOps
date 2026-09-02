@@ -1,0 +1,7 @@
+mlruns/
+predictions.db
+__pycache__/
+*.pyc
+.git/
+.pytest_cache/
+venv/
