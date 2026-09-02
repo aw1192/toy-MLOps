@@ -114,16 +114,4 @@ understand *production* ML, not just modeling.
 the Docker image. Push to GitHub and check the Actions tab — a red X means
 something broke before it ever reached deployment.
 
-## Applying this to the fraud project
-
-When you're ready to move to the real project, the changes are:
-- `train.py`: swap the sklearn toy dataset for your fraud data + your
-  supervised/unsupervised/PU-learning blend
-- `app.py`: swap `PredictRequest` for named transaction fields (amount,
-  merchant category, etc.) instead of a raw float list — worth doing for
-  real, since named fields catch schema mistakes early
-- `dashboard.py`: the drift story becomes much more real — you can split
-  by time period using actual transaction timestamps rather than a
-  synthetic injection
-- Everything else (Docker, FastAPI structure, CI, SQLite logging) carries
-  over almost unchanged
+Deployed on Render.
